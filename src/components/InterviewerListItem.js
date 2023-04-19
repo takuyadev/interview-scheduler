@@ -11,12 +11,8 @@ const InterviewerListItem = (props) => {
       "interviewers__item-image": props.selected,
    });
 
-   const handleClick = () => {
-      props.setInterviewer(props.id);
-   };
-
    return (
-      <li onClick={handleClick} className={liClass}>
+      <li onClick={props.setInterviewer} className={liClass}>
          <img className={imgClass} src={props.avatar} alt={props.name} />
          {props.selected && props.name}
       </li>
