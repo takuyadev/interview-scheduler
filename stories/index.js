@@ -31,11 +31,15 @@ storiesOf("DayListItem", module)
    .addParameters({
       backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
    })
-   .add("Unselected", () => <DayListItem name="Monday" spots={5} />)
-   .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
-   .add("Full", () => <DayListItem name="Monday" spots={0} />)
+   .add("Unselected", () => <DayListItem value="Monday" spots={5} />)
+   .add("Selected", () => <DayListItem value="Monday" spots={5} selected />)
+   .add("Full", () => <DayListItem value="Monday" spots={0} />)
    .add("Clickable", () => (
-      <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
+      <DayListItem
+         value="Tuesday"
+         onClick={() => action("setDay")("Tuesday")}
+         spots={5}
+      />
    ));
 
 const days = [
@@ -61,13 +65,13 @@ storiesOf("DayList", module)
       backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
    })
    .add("Monday", () => (
-      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+      <DayList days={days} day={"Monday"} onChange={action("setDay")} />
    ))
    .add("Tuesday", () => (
-      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+      <DayList days={days} day={"Tuesday"} onChange={action("setDay")} />
    ))
    .add("Wednesday", () => (
-      <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+      <DayList days={days} day={"Wednesday"} onChange={action("setDay")} />
    ));
 
 const interviewer = {
@@ -97,7 +101,7 @@ storiesOf("InterviewerListItem", module)
       <InterviewerListItem
          name={interviewer.name}
          avatar={interviewer.avatar}
-         setInterviewer={() => action("setInterviewer")(interviewer.id)}
+         onClick={() => action("setInterviewer")(interviewer.id)}
       />
    ));
 
@@ -120,6 +124,6 @@ storiesOf("InterviewerList", module)
    .add("Clickable", () => (
       <InterviewerList
          interviewers={interviewers}
-         setInterviewer={action("setInterviewer")}
+         onChange={action("setInterviewer")}
       />
    ));

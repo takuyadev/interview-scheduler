@@ -7,11 +7,11 @@ const DayList = (props) => {
       {props.days.map((day, i) => (
         <DayListItem
           key={i}
-          name={day.name}
+          value={day.name}
           selected={props.day === day.name}
           spots={day.spots}
           message={day.message}
-          setDay={props.setDay}
+          onClick={props.onChange}
         />
       ))}
     </ul>
