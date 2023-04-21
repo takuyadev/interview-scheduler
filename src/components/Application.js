@@ -1,9 +1,9 @@
 import "components/Application.scss";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
 
 export default function Application(props) {
    // Setup entire app state for project
@@ -22,19 +22,33 @@ export default function Application(props) {
    useEffect(() => {
       Promise.all([
          axios.get("http://localhost:8001/api/days"),
-         axios.get("http://localhost:8001/api/appointments")
-      ])
-
-      .then((res)=>{
-         setState(prev => ({...prev, days: res[0].data, appointments: res[1].data}))
-      })
+         axios.get("http://localhost:8001/api/appointments"),
+         axios.get("http://localhost:8001/api/interviewers"),
+      ]).then((res) => {
+         setState((prev) => ({
+            ...prev,
+            days: res[0].data,
+            appointments: res[1].data,
+            interviewers: res[2].data,
+         }));
+      });
    }, []);
-
 
    // Render appointment list based on state.appointments
    const AppointmentList = () => {
-      const filterAppointments = getAppointmentsForDay(state, state.day)
-      return filterAppointments.map((appointment, i) => <Appointment key={i} {...appointment} />);
+      const filterAppointments = getAppointmentsForDay(state, state.day);
+      return filterAppointments.map((appointment) => {
+         const interview = getInterview(state, appointment.interview);
+
+         return (
+            <Appointment
+               key={appointment.id}
+               id={appointment.id}
+               time={appointment.time}
+               interview={appointment.interview}
+            />
+         );
+      });
    };
 
    return (
@@ -45,7 +59,11 @@ export default function Application(props) {
             <nav className="sidebar__menu">
                <DayList days={state.days} day={state.day} onChange={setDay} />
             </nav>
-            <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
+            <img
+               className="sidebar__lhl sidebar--centered"
+               src="images/lhl.png"
+               alt="Lighthouse Labs"
+            />
          </section>
          <section className="schedule">{state.appointments && <AppointmentList />}</section>
       </main>
