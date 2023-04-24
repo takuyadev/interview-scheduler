@@ -3,8 +3,8 @@ import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
 const Form = (props) => {
-   const [student, setStudent] = useState(props.student || "");
-   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+   const [student, setStudent] = useState(props.student);
+   const [interviewer, setInterviewer] = useState(props.interviewer);
 
    const reset = () => {
       setStudent("");
