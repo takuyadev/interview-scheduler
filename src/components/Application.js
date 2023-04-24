@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
 export default function Application(props) {
    // Setup entire app state for project
@@ -15,8 +15,6 @@ export default function Application(props) {
 
    // State aliaeses
    const setDay = (day) => setState({ ...state, day });
-
-   const dailyAppointments = [];
 
    // On load call for days and appointments to populate with data
    useEffect(() => {
@@ -34,10 +32,61 @@ export default function Application(props) {
       });
    }, []);
 
+   const bookInterview = (id, interview) => {
+      // Setup for one appointment
+      const appointment = {
+         ...state.appointments[id],
+         interview: { ...interview },
+      };
+
+      // Merge current appointments with new appointment
+      const appointments = {
+         ...state.appointments,
+         [id]: appointment,
+      };
+
+      // Set state to save changes
+      axios
+         .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+         .then(() => {
+            setState((prev) => ({ ...prev, appointments }));
+         })
+         .catch((err) => console.error(err));
+   };
+
+   // Handle the saving of interview to database and client state
+   const onSave = (id) => (name, interviewer) => {
+      const interview = {
+         student: name,
+         interviewer,
+      };
+
+      bookInterview(id, interview);
+   };
+
+   //
+   const onDelete = (id) => {
+      axios
+         .delete(`http://localhost:8001/api/appointments/${id}`)
+         .then(() => {
+            axios.get("http://localhost:8001/api/appointments").then((res) => {
+               setState((prev) => ({
+                  ...prev,
+                  appointments: res.data,
+               }));
+            });
+         })
+         .catch((err) => console.error(err));
+   };
+
    // Render appointment list based on state.appointments
    const AppointmentList = () => {
+      // Get relevant data based on the day and time
       const filterAppointments = getAppointmentsForDay(state, state.day);
+      const filterInterviewers = getInterviewersForDay(state, state.day);
+
       return filterAppointments.map((appointment) => {
+         // Get full interview details by id before drilling prop
          const interview = getInterview(state, appointment.interview);
 
          return (
@@ -45,7 +94,10 @@ export default function Application(props) {
                key={appointment.id}
                id={appointment.id}
                time={appointment.time}
-               interview={appointment.interview}
+               interview={interview}
+               interviewers={filterInterviewers}
+               onSave={(name, interviewer) => onSave(appointment.id)(name, interviewer)}
+               onDelete={() => onDelete(appointment.id)}
             />
          );
       });

@@ -17,7 +17,10 @@ const Form = (props) => {
    };
 
    const handleSave = () => {
-      props.onSave();
+      // Call on save passed by props
+      props.onSave(student, interviewer);
+
+      // Reset form
       reset();
    };
 
@@ -46,10 +49,10 @@ const Form = (props) => {
          </section>
          <section className="appointment__card-right">
             <section className="appointment__actions">
-               <Button onClick={handleCancel} danger>
+               <Button onClick={handleCancel} danger={"true"}>
                   Cancel
                </Button>
-               <Button onClick={handleSave} confirm>
+               <Button onClick={handleSave} confirm={"true"}>
                   Save
                </Button>
             </section>
