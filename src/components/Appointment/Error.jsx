@@ -1,9 +1,10 @@
 import React from "react";
 
+// @desc Render error message for caught errors
+// @props message
+
 const Error = (props) => {
-   const handleClose = () => {
-      props.onClose();
-   };
+   const handleClose = () => props.onClose();
    return (
       <main className="appointment__card appointment__card--error">
          <section className="appointment__error-message">

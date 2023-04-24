@@ -1,69 +1,14 @@
 import "./Application.scss";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DayList from "../components/DayList/DayList.jsx";
 import Appointment from "../components/Appointment/index.jsx";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../utils/selectors";
-import { deleteAppointment, getAllData, updateAppointment } from "services/api";
+import { DEFAULT } from "data/constants";
+import { useApplicationData } from "hooks/useApplicationData";
 
 // Default CSR page
 const Application = () => {
-   // Setup entire app state for project
-   const [state, setState] = useState({
-      day: "Monday",
-      days: [],
-      appointments: null,
-   });
-
-   // State aliases
-   const setDay = (day) => setState({ ...state, day });
-
-   // Gets all data, and updates it to state
-   const updateData = () => {
-      getAllData().then((res) => {
-         setState((prev) => ({
-            ...prev,
-            days: res[0].data,
-            appointments: res[1].data,
-            interviewers: res[2].data,
-         }));
-      });
-   }
-
-   // On load call for days and appointments to populate with data
-   useEffect(() => {
-      updateData()
-   }, []);
-
-   // Handle the saving of interview to database and client state
-   const bookInterview = (id, name, interviewer) => {
-      // Setup appointment to be pushed for update
-      const appointment = {
-         ...state.appointments[id],
-         interview: {
-            student: name,
-            interviewer,
-         },
-      };
-
-      // Merge current appointments with new appointment
-      const appointments = {
-         ...state.appointments,
-         [id]: appointment,
-      };
-
-      // Return promise, for promise handling for prop
-      return updateAppointment(id, appointment).then(() => {
-         setState((prev) => ({ ...prev, appointments }));
-      });
-   };
-
-   // Handles the deletion of an appointment
-   const handleDelete = (id) =>
-
-      // After deletion, should update all data to prevent stale state
-      deleteAppointment(id).then(() => {
-         updateData()
-      });
+   const { state, setDay, bookInterview, cancelInterview } = useApplicationData(DEFAULT);
 
    // Render appointment list based on state.appointments
    const AppointmentList = () => {
@@ -83,7 +28,7 @@ const Application = () => {
                interview={interview}
                interviewers={interviewers}
                onSave={bookInterview}
-               onDelete={handleDelete}
+               onDelete={cancelInterview}
             />
          );
       });

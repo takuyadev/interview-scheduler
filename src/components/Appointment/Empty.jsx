@@ -4,9 +4,7 @@ import React from "react";
 // @props onAdd
 
 const Empty = (props) => {
-   const handleClick = () => {
-      props.onAdd();
-   };
+   const handleClick = () => props.onAdd();
 
    return (
       <main className="appointment__add">
