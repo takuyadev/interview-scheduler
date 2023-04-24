@@ -1,5 +1,8 @@
 import React from "react";
 
+// @desc Renders out header; time of appointment
+// @props time
+
 const Header = (props) => {
    return (
       <div>

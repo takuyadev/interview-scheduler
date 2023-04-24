@@ -1,5 +1,8 @@
 import React from "react";
-import Button from "components/Button";
+import Button from "../Button/Button.jsx";
+
+// @desc Renders confirm page before deletion
+// @props onCancel, onConfirm
 
 const Confirm = (props) => {
    const handleCancel = () => {

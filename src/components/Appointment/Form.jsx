@@ -1,31 +1,35 @@
 import React, { useState } from "react";
-import Button from "components/Button";
-import InterviewerList from "components/InterviewerList";
+import Button from "../Button/Button.jsx";
+import InterviewerList from "../InterviewerList/InterviewerList.jsx";
+
+// @desc Renders out form for adding or editing appointment
+// @props onCancel, onSave, student, interviewer
 
 const Form = (props) => {
-   const [student, setStudent] = useState(props.student);
-   const [interviewer, setInterviewer] = useState(props.interviewer);
+   // Control student name and interviewer's id with states
+   const [student, setStudent] = useState(props.student || "");
+   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
+   // Sets states back to default
    const reset = () => {
       setStudent("");
       setInterviewer(null);
    };
 
+   // Handles change of input
+   const handleInput = (event) => setStudent(event.target.value);
+
+
+   // Cancels, then resets form back to default
    const handleCancel = () => {
       props.onCancel();
       reset();
    };
 
+   // Saves, then resets form back to default
    const handleSave = () => {
-      // Call on save passed by props
       props.onSave(student, interviewer);
-
-      // Reset form
       reset();
-   };
-
-   const handleInput = (event) => {
-      setStudent(event.target.value);
    };
 
    return (
@@ -36,15 +40,15 @@ const Form = (props) => {
                   className="appointment__create-input text--semi-bold"
                   name="name"
                   type="text"
-                  value={student}
                   placeholder="Enter Student Name"
+                  value={student}
                   onChange={handleInput}
                />
             </form>
             <InterviewerList
                interviewer={interviewer}
                interviewers={props.interviewers}
-               onChange={setInterviewer}
+               onClick={setInterviewer}
             />
          </section>
          <section className="appointment__card-right">

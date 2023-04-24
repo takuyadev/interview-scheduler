@@ -23,5 +23,5 @@ export const useVisualMode = (initial) => {
       });
    };
 
-   return { mode, back, transition };
+   return { history, mode, back, transition };
 };

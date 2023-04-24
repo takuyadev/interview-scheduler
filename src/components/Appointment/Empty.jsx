@@ -1,5 +1,8 @@
 import React from "react";
 
+// @desc Renders out a single + button, if there is no appointment
+// @props onAdd
+
 const Empty = (props) => {
    const handleClick = () => {
       props.onAdd();

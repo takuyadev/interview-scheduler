@@ -1,0 +1,11 @@
+export const MODE = {
+   SHOW: "SHOW",
+   EMPTY: "EMPTY",
+   CREATE: "CREATE",
+   SAVING: "SAVING",
+   CONFIRM: "CONFIRM",
+   DELETE: "DELETE",
+   ERROR_EDIT: "ERROR_EDIT",
+   ERROR_DELETE: "ERROR_DELETE",
+   EDIT: "EDIT",
+};

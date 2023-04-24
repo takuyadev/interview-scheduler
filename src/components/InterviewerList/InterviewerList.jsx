@@ -1,16 +1,22 @@
 import React from "react";
 import "./InterviewerList.scss";
-import InterviewerListItem from "./InterviewerListItem";
+import InterviewerListItem from "../interviewerListItem/InterviewerListItem.jsx";
+
+// @props interviewers, onChange
+// @desc Render out all interviewers in a list
 
 const InterviewerList = (props) => {
+
+   // Render out lists of interviews, passed in by props
    const List = () =>
       props.interviewers.map((interviewer) => {
+         // For every interviewer, add onClick event handler to update state
          return (
             <InterviewerListItem
                key={interviewer.id}
                name={interviewer.name}
                avatar={interviewer.avatar}
-               onClick={() => props.onChange(interviewer.id)}
+               onClick={() => props.onClick(interviewer.id)}
                selected={interviewer.id === props.interviewer}
             />
          );

@@ -1,6 +1,9 @@
 import React from "react";
 import DayListItem from "./DayListItem";
 
+// @desc Render all selectable dates in the nav menu
+// @props day, onChange
+
 const DayList = (props) => {
   return (
     <ul>

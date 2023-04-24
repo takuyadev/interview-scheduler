@@ -1,13 +1,13 @@
 import React from "react";
 
-const Show = (props) => {
-   const handleEdit = () => {
-      props.onEdit();
-   };
+// @desc Renders out booked appointment with details on appointment
+// @props onEdit, onDelete, name, interviewer
 
-   const handleDelete = () => {
-      props.onDelete();
-   };
+const Show = (props) => {
+
+   // Handles event handlers for when edit or delete is pressed
+   const handleEdit = () => props.onEdit();
+   const handleDelete = () => props.onDelete();
 
    return (
       <main className="appointment__card appointment__card--show">
