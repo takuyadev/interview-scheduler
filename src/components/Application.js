@@ -13,7 +13,7 @@ export default function Application(props) {
       appointments: null,
    });
 
-   // State aliaeses
+   // State aliases
    const setDay = (day) => setState({ ...state, day });
 
    // On load call for days and appointments to populate with data
@@ -32,7 +32,7 @@ export default function Application(props) {
       });
    }, []);
 
-   const bookInterview = (id, interview) => {
+   const bookInterview = (id, interview, callback) => {
       // Setup for one appointment
       const appointment = {
          ...state.appointments[id],
@@ -51,21 +51,21 @@ export default function Application(props) {
          .then(() => {
             setState((prev) => ({ ...prev, appointments }));
          })
-         .catch((err) => console.error(err));
+         .catch((err) => callback());
    };
 
    // Handle the saving of interview to database and client state
-   const onSave = (id) => (name, interviewer) => {
+   const onSave = (id, name, interviewer, callback) => {
       const interview = {
          student: name,
          interviewer,
       };
 
-      bookInterview(id, interview);
+      bookInterview(id, interview, callback);
    };
 
    //
-   const onDelete = (id) => {
+   const onDelete = (id, callback) => {
       axios
          .delete(`http://localhost:8001/api/appointments/${id}`)
          .then(() => {
@@ -76,7 +76,9 @@ export default function Application(props) {
                }));
             });
          })
-         .catch((err) => console.error(err));
+         .catch((err) => {
+            callback();
+         });
    };
 
    // Render appointment list based on state.appointments
@@ -96,8 +98,8 @@ export default function Application(props) {
                time={appointment.time}
                interview={interview}
                interviewers={filterInterviewers}
-               onSave={(name, interviewer) => onSave(appointment.id)(name, interviewer)}
-               onDelete={() => onDelete(appointment.id)}
+               onSave={onSave}
+               onDelete={onDelete}
             />
          );
       });

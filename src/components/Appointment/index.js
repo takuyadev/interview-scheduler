@@ -7,6 +7,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 const Appointment = (props) => {
    const SHOW = "SHOW";
@@ -15,6 +16,8 @@ const Appointment = (props) => {
    const SAVING = "SAVING";
    const CONFIRM = "CONFIRM";
    const DELETE = "DELETE";
+   const ERROR_EDIT = "ERROR_EDIT";
+   const ERROR_DELETE = "ERROR_DELETE";
    const EDIT = "EDIT";
 
    // Initial states
@@ -22,9 +25,11 @@ const Appointment = (props) => {
    const { mode, transition, back } = useVisualMode(setInitial);
 
    // Sets form state to saving immediately, and attempts to save
-   const handleSave = (name, interviewer) => {
+   const handleSave = (student, interviewer) => {
       transition(SAVING);
-      props.onSave(name, interviewer);
+      props.onSave(props.id, student, interviewer, () => {
+         transition(ERROR_EDIT, true);
+      });
    };
 
    // Sets form state to saving immediately, and attempts to save
@@ -33,9 +38,11 @@ const Appointment = (props) => {
    };
 
    // Sets form state to saving immediately, and attempts to save
-   const handleConfirm = (id) => {
+   const handleConfirm = () => {
       transition(DELETE);
-      props.onDelete(id);
+      props.onDelete(props.id, () => {
+         transition(ERROR_DELETE, true);
+      });
    };
 
    // Sets form state to saving immediately, and attempts to save
@@ -70,9 +77,16 @@ const Appointment = (props) => {
             />
          )}
 
-         {mode === CONFIRM && <Confirm onConfirm={handleConfirm} />}
+         {mode === CONFIRM && <Confirm onCancel={() => back()} onConfirm={handleConfirm} />}
          {mode === SAVING && <Status message="Saving" />}
          {mode === DELETE && <Status message="Delete" />}
+
+         {mode === ERROR_EDIT && (
+            <Error onClose={() => back()} message="Error editing your appointment" />
+         )}
+         {mode === ERROR_DELETE && (
+            <Error onClose={() => back()} message="Error deleting your appointment" />
+         )}
       </article>
    );
 };
