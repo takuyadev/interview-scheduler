@@ -16,10 +16,11 @@ const Application = () => {
       const appointments = getAppointmentsForDay(state, state.day);
       const interviewers = getInterviewersForDay(state, state.day);
 
-      return appointments.map((appointment) => {
+      return appointments.map((appointment, i) => {
          // Get full interview details by id before drilling prop
          const interview = getInterview(state, appointment.interview);
 
+         console.log(appointment)
          return (
             <Appointment
                key={appointment.id}

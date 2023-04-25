@@ -50,7 +50,7 @@ function reducer(state, action) {
 
          // Update spots only on currently selected day (state.day)
          const days = state.days.map((day) => {
-            const spots = state.day === day.name ? updateSpots(appointments): day.spots;
+            const spots = state.day === day.name ? updateSpots(appointments) : day.spots;
 
             return {
                ...day,
@@ -119,7 +119,7 @@ export const useApplicationData = (initialValue) => {
    // Listen for changes on websocket
    useEffect(() => {
       // Establish connection to websocket
-      const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+      const socket = new WebSocket("ws://localhost:8001");
 
       // Listen for messages, and set interview if anything changes
       socket.addEventListener("message", (e) => {
@@ -133,7 +133,9 @@ export const useApplicationData = (initialValue) => {
 
       // Cleanup socket on unmount
       return () => {
-         socket.removeEventListener("open");
+         socket.addEventListener("close", () => {});
+         socket.removeEventListener("open", () => {});
+         socket.removeEventListener("message", () => {});
       };
    }, []);
 

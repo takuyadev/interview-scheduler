@@ -17,6 +17,7 @@ export function getAppointmentsForDay(state, day) {
    return res[0].appointments.map((index) => state.appointments[index]);
 }
 
+// Get full interview object based on id
 export const getInterview = (state, appointment) => {
    if (!appointment) {
       return null;
@@ -44,7 +45,6 @@ export const getInterviewersForDay = (state, day) => {
 
 // Update spots based on arguments provided, returns number
 export const updateSpots = (appointments) => {
-
    // If falsy, return 0
    if (!appointments) {
       return 0;
@@ -58,8 +58,10 @@ export const updateSpots = (appointments) => {
    // Happy path
    const result = Object.values(appointments).reduce((acc, curr) => {
       // Increment only if interview is not null
-      return curr.interview ? acc : ++acc;
+      return !curr.interview ? ++acc : acc;
    }, 0);
+
+   console.log(appointments)
 
    return result;
 };

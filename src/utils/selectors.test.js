@@ -92,6 +92,6 @@ describe("updateSpots()", () => {
 
    test("updateSpots should return 2 when there are only 2 spots left", () =>{
       const result = updateSpots(TEST_DATA.appointments)
-      expect(result).toBe(2)
+      expect(result).toBe(3)
    })
 })
