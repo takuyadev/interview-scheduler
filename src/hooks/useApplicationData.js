@@ -20,7 +20,6 @@ function reducer(state, action) {
       // Updates all data based on provided payload
       case TYPE.SET_APPLICATION_DATA: {
          const { data } = action.payload;
-         console.log(data);
          const mergeData = { ...state, ...data };
          return mergeData;
       }

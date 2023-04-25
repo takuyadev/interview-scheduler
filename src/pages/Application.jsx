@@ -20,7 +20,6 @@ const Application = () => {
          // Get full interview details by id before drilling prop
          const interview = getInterview(state, appointment.interview);
 
-         console.log(appointment)
          return (
             <Appointment
                key={appointment.id}
