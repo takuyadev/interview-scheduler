@@ -5,7 +5,9 @@ import { getAppointmentsForDay, updateSpots } from "utils/selectors";
 const TYPE = {
    SET_DAY: "SET_DAY",
    SET_APPLICATION_DATA: "SET_APPLICATION_DATA",
+   SET_APPOINTMENT: "SET_APPOINTMENT",
    SET_INTERVIEW: "SET_INTERVIEW",
+   UPDATE_SPOTS: "UPDATE_SPOTS",
 };
 
 function reducer(state, action) {
@@ -18,18 +20,46 @@ function reducer(state, action) {
       // Updates all data based on provided payload
       case TYPE.SET_APPLICATION_DATA: {
          const { data } = action.payload;
-         console.log(data)
+         console.log(data);
          const mergeData = { ...state, ...data };
          return mergeData;
       }
 
       // Updates single interview based on id and appointment
       case TYPE.SET_INTERVIEW: {
+         const { id, interview } = action.payload;
+         return {
+            ...state,
+            appointments: { ...state.appointments, [id]: { ...state.appointments[id], interview } },
+         };
+      }
+
+      // Updates single interview based on id and appointment
+      case TYPE.SET_APPOINTMENT: {
          const { id, appointment } = action.payload;
          return {
             ...state,
             appointments: { ...state.appointments, [id]: { ...appointment } },
          };
+      }
+
+      // Updates spots for selected day
+      case TYPE.UPDATE_SPOTS: {
+         // Get appointments for the day to map through
+         const appointments = getAppointmentsForDay(state, state.day);
+
+         // Update spots only on currently selected day (state.day)
+         const days = state.days.map((day) => {
+            const spots = state.day === day.name ? updateSpots(appointments): day.spots;
+
+            return {
+               ...day,
+               spots,
+            };
+         });
+
+         // Return updated state with updated days
+         return { ...state, days };
       }
 
       // Throw error on any unsupported types, including null
@@ -38,6 +68,7 @@ function reducer(state, action) {
    }
 }
 
+// Custom hook to manage application state
 export const useApplicationData = (initialValue) => {
    const [state, dispatch] = useReducer(reducer, initialValue);
 
@@ -71,24 +102,10 @@ export const useApplicationData = (initialValue) => {
          },
       };
 
-      // Get appointments for the day to map through
-      const appointments = getAppointmentsForDay(state, state.day);
-
-      // Update spots only on currently selected day
-      const days = state.days.map((day) => {
-         // -1 since state doesn't update immediately
-         const spots = state.day === day.name ? updateSpots(appointments) - 1 : day.spots;
-
-         return {
-            ...day,
-            spots
-         };
-      });
-
       // Return promise, for promise handling for prop
       return updateAppointment(id, appointment).then(() => {
-         dispatch({ type: TYPE.SET_INTERVIEW, payload: { id, appointment } });
-         dispatch({ type: TYPE.SET_APPLICATION_DATA, payload: { data: { days } } });
+         dispatch({ type: TYPE.SET_APPOINTMENT, payload: { id, appointment } });
+         dispatch({ type: TYPE.UPDATE_SPOTS });
       });
    };
 
@@ -99,9 +116,27 @@ export const useApplicationData = (initialValue) => {
          updateData();
       });
 
+   // Listen for changes on websocket
    useEffect(() => {
-      console.log(state);
-   }, [state]);
+      // Establish connection to websocket
+      const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+      // Listen for messages, and set interview if anything changes
+      socket.addEventListener("message", (e) => {
+         const data = JSON.parse(e.data);
+         dispatch({
+            type: TYPE.SET_INTERVIEW,
+            payload: { id: data.id, interview: data.interview },
+         });
+         dispatch({ type: TYPE.UPDATE_SPOTS });
+      });
+
+      // Cleanup socket on unmount
+      return () => {
+         socket.removeEventListener("open");
+      };
+   }, []);
+
    // Listen for load, and get all data to overwrite default state
    useEffect(() => {
       updateData();

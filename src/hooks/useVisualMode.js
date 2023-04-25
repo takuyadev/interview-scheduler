@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
+// Custom hook to handle changes in UI
 export const useVisualMode = (initial) => {
    const [mode, setMode] = useState(initial);
    const [history, setHistory] = useState([initial]);
 
-   const transition = (value, replace = false) => {
+   // Transition to provided mode in params
+   // useCallback to prevent rerenders when used as depen
+   const transition = useCallback((value, replace = false) => {
       setMode(value);
       setHistory((prev) => {
          if (replace) {
             prev.pop();
          }
-
          return [...prev, value];
       });
-   };
+   }, []);
 
+   // Go back one time in history array
    const back = () => {
       setHistory((prev) => {
          prev.pop();

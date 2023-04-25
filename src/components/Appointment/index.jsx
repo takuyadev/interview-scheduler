@@ -20,6 +20,10 @@ const Appointment = (props) => {
 
    // Sets form state to saving immediately, and attempts to save
    const handleSave = (student, interviewer) => {
+      if (!student || !interviewer) {
+         return transition(MODE.ERROR_SAVE)
+      }
+
       transition(MODE.SAVING);
 
       // If error is caught, then render error message
@@ -62,7 +66,7 @@ const Appointment = (props) => {
          )}
 
          {/* Show current filled in appointment */}
-         {mode === MODE.SHOW && (
+         {mode === MODE.SHOW && props.interview && (
             <Show
                name={props.interview.student}
                interviewer={props.interview.interviewer}
@@ -88,6 +92,11 @@ const Appointment = (props) => {
          {/* Render statuses for loading API calls */}
          {mode === MODE.SAVING && <Status message="Saving" />}
          {mode === MODE.DELETE && <Status message="Delete" />}
+
+         {/* Error messages for respective modes */}
+         {mode === MODE.ERROR_SAVE && (
+            <Error onClose={back} message="Please enter your name and select interviewer" />
+         )}
 
          {/* Error messages for respective modes */}
          {mode === MODE.ERROR_EDIT && (

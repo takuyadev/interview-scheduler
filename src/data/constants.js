@@ -8,6 +8,7 @@ export const MODE = {
    ERROR_EDIT: "ERROR_EDIT",
    ERROR_DELETE: "ERROR_DELETE",
    EDIT: "EDIT",
+   ERROR_SAVE: "ERROR_SAVE",
 };
 
 export const DEFAULT = {
