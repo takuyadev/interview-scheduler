@@ -1,12 +1,11 @@
-import React from "react";
 import "./InterviewerList.scss";
+import React from "react";
 import InterviewerListItem from "../interviewerListItem/InterviewerListItem.jsx";
 
 // @props interviewers, onChange
 // @desc Render out all interviewers in a list
 
 const InterviewerList = (props) => {
-
    // Render out lists of interviews, passed in by props
    const List = () =>
       props.interviewers.map((interviewer) => {

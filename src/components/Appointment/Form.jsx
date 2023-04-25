@@ -19,7 +19,6 @@ const Form = (props) => {
    // Handles change of input
    const handleInput = (event) => setStudent(event.target.value);
 
-
    // Cancels, then resets form back to default
    const handleCancel = () => {
       props.onCancel();

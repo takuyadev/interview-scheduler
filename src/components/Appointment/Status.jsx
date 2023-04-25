@@ -1,5 +1,8 @@
 import React from "react";
 
+// @desc Renders out a loading status for the form
+// @props message
+
 const Status = (props) => {
    return (
       <main className="appointment__card appointment__card--status">
