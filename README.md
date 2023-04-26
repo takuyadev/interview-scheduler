@@ -10,7 +10,10 @@ Application created using React.js that shows all appointments, organized by day
 - [Website](https://interviewer-scheduler.netlify.app/)
 - [API](https://scheduler-api-production-cd67.up.railway.app/)
 
-
+### Endpoints for API
+- `/api/days`: GET all days (Mon-Fri)
+- `/api/interviewers`: GET all interviewers
+- `/api/appointments`: GET all appointments OR PUT one appointment
 
 ## Techstack
 - React.js
