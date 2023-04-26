@@ -5,8 +5,12 @@ Application created using React.js that shows all appointments, organized by day
 !["Screenshot of deleting process"](https://github.com/takuyadev/interview-scheduler/blob/master/docs/homepage_delete.png?raw=true)
 
 ## Live Website
-[Website](https://interviewer-scheduler.netlify.app/)
-[API](https://scheduler-api-production-cd67.up.railway.app/)
+> If there are issues with slow load, please note that it may take server a little while before it comes up from sleep, so it may take a longer time to load on first load, if it was not initialized for a while.
+
+- [Website](https://interviewer-scheduler.netlify.app/)
+- [API](https://scheduler-api-production-cd67.up.railway.app/)
+
+
 
 ## Techstack
 - React.js
