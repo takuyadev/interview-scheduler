@@ -1,8 +1,8 @@
 # Interview Scheduler
 Application created using React.js that shows all appointments, organized by day, and be able to create, update and delete any appointments based on the request the client makes to the scheduler API. Any updates will be automatically updated and rerendered on the every client, using Websocket.
 
-!["Screenshot of homepage"]()
-!["Screenshot of deleting process"]()
+!["Screenshot of homepage"](https://github.com/takuyadev/interview-scheduler/blob/master/docs/homepage.png?raw=true)
+!["Screenshot of deleting process"](https://github.com/takuyadev/interview-scheduler/blob/master/docs/homepage_delete.png?raw=true)
 
 ## Live Website
 [Website](https://interviewer-scheduler.netlify.app/)
