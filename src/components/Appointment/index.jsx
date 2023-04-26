@@ -21,7 +21,7 @@ const Appointment = (props) => {
    // Sets form state to saving immediately, and attempts to save
    const handleSave = (student, interviewer) => {
       if (!student || !interviewer) {
-         return transition(MODE.ERROR_SAVE)
+         return transition(MODE.ERROR_SAVE);
       }
 
       transition(MODE.SAVING);
@@ -54,7 +54,7 @@ const Appointment = (props) => {
    const handleDelete = () => transition(MODE.CONFIRM);
 
    return (
-      <article className="appointment">
+      <article data-testid="appointment" className="appointment">
          <Header time={props.time} />
 
          {/* Render empty card with add button  */}

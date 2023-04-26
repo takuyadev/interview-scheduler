@@ -48,7 +48,9 @@ const Application = () => {
                alt="Lighthouse Labs"
             />
          </section>
-         <section className="schedule">{state.appointments && <AppointmentList />}</section>
+         <section  className="schedule">
+            {state.appointments && <AppointmentList />}
+         </section>
       </main>
    );
 };
