@@ -11,9 +11,9 @@ export const TYPE = {
 export const reducer = (state, action) => {
    switch (action.type) {
       // Updates single day based on payload
-      // case TYPE.SET_DAY:
-      //    const { day } = action.payload;
-      //    return { ...state, day };
+      case TYPE.SET_DAY:
+         const { day } = action.payload;
+         return { ...state, day };
 
       // Updates all data based on provided payload
       case TYPE.SET_APPLICATION_DATA: {
