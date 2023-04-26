@@ -20,11 +20,7 @@
       "build-storybook": "build-storybook -s public",
       "cypress": "cypress open -P ."
    },
-   "eslintConfig": {
-      "extends": [
-         "plugin:cypress/recommended"
-      ]
-   },
+
    "browserslist": {
       "production": [
          ">0.2%",
@@ -49,6 +45,7 @@
       "@testing-library/react": "^8.0.7",
       "babel-loader": "8.1.0",
       "cypress": "^9.7.0",
+      "eslint-plugin-cypress": "^2.13.2",
       "prop-types": "^15.8.1",
       "react-hooks-testing-library": "^0.6.0",
       "react-test-renderer": "^16.9.0",
