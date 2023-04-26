@@ -5,7 +5,6 @@ import Button from "../Button/Button.jsx";
 // @props onCancel, onConfirm
 
 const Confirm = (props) => {
-
    // Handles event listeners for canceling and confirm
    const handleCancel = () => props.onCancel();
    const handleConfirm = () => props.onConfirm();
@@ -14,10 +13,10 @@ const Confirm = (props) => {
       <main className="appointment__card appointment__card--confirm">
          <h1 className="text--semi-bold">Delete the appointment?</h1>
          <section className="appointment__actions">
-            <Button onClick={handleCancel} danger='true'>
+            <Button onClick={handleCancel} data-testid="cancel" danger="true">
                Cancel
             </Button>
-            <Button onClick={handleConfirm} danger='true'>
+            <Button onClick={handleConfirm} data-testid="confirm" danger="true">
                Confirm
             </Button>
          </section>

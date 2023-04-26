@@ -69,10 +69,10 @@ function Form(props) {
          </section>
          <section className="appointment__card-right">
             <section className="appointment__actions">
-               <Button onClick={handleCancel} danger={"true"}>
+               <Button onClick={handleCancel} data-testid="cancel" danger={"true"}>
                   Cancel
                </Button>
-               <Button onClick={handleSave} confirm={"true"}>
+               <Button onClick={handleSave} data-testid="save"  confirm={"true"}>
                   Save
                </Button>
             </section>

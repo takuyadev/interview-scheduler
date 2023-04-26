@@ -1,12 +1,11 @@
 import React from "react";
 import classNames from "classnames";
-import "./InterviewerListItem.scss"
+import "./InterviewerListItem.scss";
 
 // @desc Render one interviewer as a clickable avatar
 // @props selected, name, avatar, onClick
 
 const InterviewerListItem = (props) => {
-
    // Dynamic rendering with classes, provided with props
    const liClass = classNames("interviewers__item", {
       "interviewers__item--selected": props.selected,
@@ -18,7 +17,12 @@ const InterviewerListItem = (props) => {
 
    return (
       <li onClick={props.onClick} className={liClass}>
-         <img className={imgClass} src={props.avatar} alt={props.name} />
+         <img
+            data-testid="interviewer-list-item"
+            className={imgClass}
+            src={props.avatar}
+            alt={props.name}
+         />
          {props.selected && props.name}
       </li>
    );

@@ -24,11 +24,13 @@ const Show = (props) => {
                   className="appointment__actions-button"
                   src="images/edit.png"
                   alt="Edit"
+                  data-testid="edit"
                   onClick={handleEdit}
                />
                <img
                   className="appointment__actions-button"
                   src="images/trash.png"
+                  data-testid="delete"
                   alt="Delete"
                   onClick={handleDelete}
                />

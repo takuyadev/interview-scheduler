@@ -13,6 +13,7 @@ const InterviewerList = (props) => {
          // For every interviewer, add onClick event handler to update state
          return (
             <InterviewerListItem
+               data-testid="interviewer-list-item"
                key={interviewer.id}
                name={interviewer.name}
                avatar={interviewer.avatar}
