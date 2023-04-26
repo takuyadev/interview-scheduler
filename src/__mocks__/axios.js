@@ -1,3 +1,5 @@
+export let shouldDelete = true;
+
 const fixtures = {
    days: [
       {
@@ -56,6 +58,18 @@ const fixtures = {
 export default {
    defaults: { baseURL: "" },
    put: jest.fn(() => Promise.resolve({ status: 204, statusText: "No Content" })),
+   delete: jest.fn(() => {
+
+      // If shouldDelete is true, return success
+      if(shouldDelete){
+         fixtures.appointments["2"].interview = null
+         return Promise.resolve({ status: 200, statusText: "Deleted" });
+      }
+
+      // Return error if not
+      return Promise.resolve({ status: 500, statusText: "Error deleting" });
+      
+   }),
    get: jest.fn((url) => {
       switch (url) {
          case "/api/days": {

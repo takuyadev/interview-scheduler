@@ -42,24 +42,24 @@ function reducer(state, action) {
          };
       }
 
-      // Updates spots for selected day
-      case TYPE.UPDATE_SPOTS: {
-         // Get appointments for the day to map through
-         const appointments = getAppointmentsForDay(state, state.day);
+     // Updates spots for selected day
+     case TYPE.UPDATE_SPOTS: {
+      // Get appointments for the day to map through
+      const appointments = getAppointmentsForDay(state, state.day);
 
-         // Update spots only on currently selected day (state.day)
-         const days = state.days.map((day) => {
-            const spots = state.day === day.name ? updateSpots(appointments) : day.spots;
+      // Update spots only on currently selected day (state.day)
+      const days = state.days.map((day) => {
+         const spots = state.day === day.name ? updateSpots(appointments) : day.spots;
 
-            return {
-               ...day,
-               spots,
-            };
-         });
+         return {
+            ...day,
+            spots,
+         };
+      });
 
-         // Return updated state with updated days
-         return { ...state, days };
-      }
+      // Return updated state with updated days
+      return { ...state, days };
+   }
 
       // Throw error on any unsupported types, including null
       default:
@@ -112,7 +112,8 @@ export const useApplicationData = (initialValue) => {
    const cancelInterview = (id) =>
       // After deletion, should update all data to prevent stale state
       deleteAppointment(id).then(() => {
-         updateData();
+         dispatch({ type: TYPE.UPDATE_SPOTS });
+
       });
 
    // Listen for changes on websocket
@@ -142,6 +143,7 @@ export const useApplicationData = (initialValue) => {
    useEffect(() => {
       updateData();
    }, []);
+
 
    return { state, setDay, bookInterview, cancelInterview };
 };

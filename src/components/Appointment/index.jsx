@@ -27,7 +27,11 @@ const Appointment = (props) => {
       transition(MODE.SAVING);
 
       // If error is caught, then render error message
-      props.onSave(props.id, student, interviewer).catch(() => {
+      props.onSave(props.id, student, interviewer)
+      .then(()=>{
+         transition(MODE.SHOW)
+      })
+      .catch(() => {
          transition(MODE.ERROR_EDIT);
       });
    };
@@ -39,12 +43,8 @@ const Appointment = (props) => {
       // After promise resolves, then transition to empty
       props
          .onDelete(props.id)
-         .then(() => {
-            transition(MODE.EMPTY);
-         })
-         .catch(() => {
-            transition(MODE.ERROR_DELETE);
-         });
+         .then(() => transition(MODE.EMPTY))
+         .catch(() => transition(MODE.ERROR_DELETE));
    };
 
    // Sets form state to saving immediately, and attempts to save
