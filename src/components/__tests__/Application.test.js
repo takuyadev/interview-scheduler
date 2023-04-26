@@ -11,8 +11,10 @@ import {
    render,
    waitForElement,
    fireEvent,
+   within,
    prettyDOM,
    getAllByTestId,
+   waitForElementToBeRemoved,
 } from "@testing-library/react";
 
 /*
@@ -35,28 +37,30 @@ describe("Application", () => {
    });
 
    it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+
+      // Render container for application
       const { container, getByText, getByAltText, getByTestId } = render(<Application />);
 
+      // Wait for axios call to load in
       await waitForElement(() => getByText("Archie Cohen"));
 
-      const appointments = getAllByTestId(container, "appointment");
-      const appointment = appointments[0];
-
+      // Go through form
       fireEvent.click(getByAltText("Add"));
       fireEvent.change(getByTestId("student-name-input"), {
          target: { value: "Lydia Miller-Jones" },
       });
-
       fireEvent.click(getByAltText("Sylvia Palmer"));
-
-      expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones")
-
+      expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
       fireEvent.click(getByText("Save"));
-      console.log("H")
+      expect(getByText("Saving")).toBeInTheDocument();
 
-      // await waitForElement(() => getByText("Saving"));
-      // await waitForElement(() => getByText("Lydia Miller-Jones"));
+      // After saving is completed, check whether appointment is added
+      await waitForElement(() => getByText("Lydia Miller-Jones"));
+      expect(getByText("Lydia Miller-Jones")).toBeInTheDocument();
 
-      // expect(getByText("Lydia Miller-Jones")).toBeInTheDocument();
+      // Check if spots has been updated
+      const monday = getAllByTestId(container, "day")[0];
+      const { getByText: getMondayText } = within(monday);
+      expect(getMondayText("no spots remaining")).toBeInTheDocument();
    });
 });

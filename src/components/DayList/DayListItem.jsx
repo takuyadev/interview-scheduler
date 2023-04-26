@@ -36,7 +36,7 @@ const DayListItem = (props) => {
    };
 
    return (
-      <li className={listClass} onClick={handleClick}>
+      <li className={listClass} data-testid="day" onClick={handleClick}>
          <h2 className="text--regular">{props.value}</h2>
          <Spots />
       </li>
