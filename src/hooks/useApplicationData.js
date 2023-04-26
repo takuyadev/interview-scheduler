@@ -55,7 +55,7 @@ export const useApplicationData = (initialValue) => {
    // Listen for changes on websocket
    useEffect(() => {
       // Establish connection to websocket
-      const socket = new WebSocket(process.REACT_APP_WEBSOCKET_URL || "ws://localhost:8001");
+      const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL || "ws://localhost:8001");
 
       // Listen for messages, and set interview if anything changes
       socket.addEventListener("message", (e) => {
@@ -69,9 +69,7 @@ export const useApplicationData = (initialValue) => {
 
       // Cleanup socket on unmount
       return () => {
-         socket.addEventListener("close", () => {});
-         socket.removeEventListener("open", () => {});
-         socket.removeEventListener("message", () => {});
+         socket.close()
       };
    }, []);
 

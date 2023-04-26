@@ -1,5 +1,5 @@
 import "./styles.scss";
-import React from "react";
+import React, { useEffect } from "react";
 import { useVisualMode } from "hooks/useVisualMode";
 import { MODE } from "data/constants";
 import Header from "./Header.jsx";
@@ -27,13 +27,14 @@ const Appointment = (props) => {
       transition(MODE.SAVING);
 
       // If error is caught, then render error message
-      props.onSave(props.id, student, interviewer)
-      .then(()=>{
-         transition(MODE.SHOW)
-      })
-      .catch(() => {
-         transition(MODE.ERROR_EDIT);
-      });
+      props
+         .onSave(props.id, student, interviewer)
+         .then(() => {
+            transition(MODE.SHOW);
+         })
+         .catch(() => {
+            transition(MODE.ERROR_EDIT);
+         });
    };
 
    // Sets form state to saving immediately, and attempts to save
@@ -52,6 +53,13 @@ const Appointment = (props) => {
 
    // Sets form state to saving immediately, and attempts to save
    const handleDelete = () => transition(MODE.CONFIRM);
+
+   // Listens to websocket, and updates on change
+   useEffect(() => {
+
+      // Check for interview status, and change mode accordingly
+      !props.interview ? transition(MODE.EMPTY) : transition(MODE.SHOW) 
+   }, [transition, props.interview]);
 
    return (
       <article data-testid="appointment" className="appointment">

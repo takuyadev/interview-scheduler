@@ -1,6 +1,6 @@
 import "./Application.scss";
 import React from "react";
-import DayList from "../components/DayList/DayList.jsx";
+import DayList from "../../components/DayList/DayList.jsx";
 import { AppointmentList } from "components/Appointment/AppointmentList.jsx";
 import { DEFAULT } from "data/constants";
 import { useApplicationData } from "hooks/useApplicationData";

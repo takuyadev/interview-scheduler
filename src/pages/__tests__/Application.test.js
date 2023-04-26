@@ -24,42 +24,57 @@ import {
   We import the component that we are testing
 */
 
-import Application from "pages/Application";
+import Application from "pages/Application/Application";
 
 /*
   A test that renders a React Component
 */
 
 describe("Application", () => {
+
+
    it("defaults to Monday and chnages the schedule when a new day is selected", async () => {
+      // 1. Render container for application
       const { getByText } = render(<Application />);
+
+      // 2. Check if "Monday" is displayed onto page
       await waitForElement(() => getByText("Monday"));
+
+      // 3. Click on "Tuesday" on the navbar
       fireEvent.click(getByText("Tuesday"));
+
+      // 4. After click, expect Tuesday appointments to be displayed
       expect(getByText("Leopold Silvers")).toBeInTheDocument();
    });
 
    it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-      // Render container for application
+      // 1. Render container for application
       const { container } = render(<Application />);
 
-      // Wait for axios call to load in
+      // 2. Check if "Archie Cohen", person with appointment is displayed
       await waitForElement(() => getByText(container, "Archie Cohen"));
 
-      // Go through form
+      // 3. Click on "Add" button on empty appointment
       fireEvent.click(getByAltText(container, "Add"));
+
+      // 4. Type in name into textbox
       fireEvent.change(getByTestId(container, "student-name-input"), {
          target: { value: "Lydia Miller-Jones" },
       });
-      fireEvent.click(getByAltText(container, "Sylvia Palmer"));
       expect(getByTestId(container, "student-name-input")).toHaveValue("Lydia Miller-Jones");
+
+      // 5. Select interviewer
+      fireEvent.click(getByAltText(container, "Sylvia Palmer"));
+
+      // 6. Click on "Save" to save appointment onto database
       fireEvent.click(getByText(container, "Save"));
       expect(getByText(container, "Saving")).toBeInTheDocument();
 
-      // After saving is completed, check whether appointment is added
+      // 7. After saving is completed, check whether appointment is added
       await waitForElement(() => getByText(container, "Lydia Miller-Jones"));
       expect(getByText(container, "Lydia Miller-Jones")).toBeInTheDocument();
 
-      // Check if spots has been updated
+      // 8. Check if spots has been updated
       const monday = getAllByTestId(container, "day")[0];
       const { getByText: getMondayText } = within(monday);
 
@@ -67,10 +82,10 @@ describe("Application", () => {
    });
 
    it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
-      // Render container for application
+      // 1. Render container for application
       const { container } = render(<Application />);
 
-      // Wait for axios call to load in
+      // 2. Wait for axios call to load in
       await waitForElement(() => getByText(container, "Archie Cohen"));
 
       // 3. Click on "Edit" Button
@@ -93,14 +108,14 @@ describe("Application", () => {
       await waitForElement(() => getByText(container, "Archie Cohen"));
       expect(getByText(container, "Archie Cohen")).toBeInTheDocument();
 
-      // 8. Check if stayed the same
+      // 8. Check if spots remained unchanged
       const monday = getAllByTestId(container, "day")[0];
       const { getByText: getMondayText } = within(monday);
-
       expect(getMondayText("1 spot remaining")).toBeInTheDocument();
    });
 
    it("shows the save error when failing to save an appointment", async () => {
+      // 0. Mock reject axios value
       axios.put.mockRejectedValueOnce();
 
       // 1. Render the Application.
@@ -157,9 +172,11 @@ describe("Application", () => {
 
       // 6. Wait for "Delete" status to be hidden
       await waitForElementToBeRemoved(() => getByText(container, "Delete"));
+
+      // 7. Show "Error" on page
       expect(queryByText(container, "Error")).toBeInTheDocument();
 
-      // 7. Check if spots left is the correct amount
+      // 8. Check if spots left is unchanged
       const monday = getAllByTestId(container, "day")[0];
       const { getByText: getMondayText } = within(monday);
       expect(getMondayText("1 spot remaining")).toBeInTheDocument();
