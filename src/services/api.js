@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.REACT_APP_HOST_URL;
+axios.defaults.baseURL = process.env.REACT_APP_HOST_URL || "http://localhost:8001";
 
 // @desc Gets appoinments, interviews, and interviewers data
 export const getAllData = () => {
