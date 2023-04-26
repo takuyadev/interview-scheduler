@@ -24,24 +24,34 @@ Application created using React.js that shows all appointments, organized by day
 - Cypress
 - Websocket
 
-## Setup
+## Setup Frontend
+This project was created using React.js v16.9.0, as well as running a development database server API. If there are any issues with installation, please make sure to downgrade or upgrade React for best compatability as well as setting up your backend.
 
-Install dependencies with `npm install`.
+1. Use React v16.9.0 (using nvm or other version managers)
+2. Clone repository onto your local machine
+3. Install dependencies with `npm install`.
 
-## Running Webpack Development Server
+### Running Webpack Development Server
 
 ```sh
 npm start
 ```
 
-## Running Jest Test Framework
+### Running Jest Test Framework
 
 ```sh
 npm test
 ```
 
-## Running Storybook Visual Testbed
+### Running Storybook Visual Testbed
 
 ```sh
 npm run storybook
 ```
+
+## Setup Backend
+To setup your backend for development, please look through this API to run it on your local machine.
+https://github.com/takuyadev/scheduler-api
+
+
+
