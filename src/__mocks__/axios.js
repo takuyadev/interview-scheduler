@@ -1,6 +1,4 @@
-export let shouldDelete = true;
-
-const fixtures = {
+const DEFAULT = {
    days: [
       {
          id: 1,
@@ -55,20 +53,17 @@ const fixtures = {
    },
 };
 
+let fixtures = { ...DEFAULT };
+
 export default {
    defaults: { baseURL: "" },
-   put: jest.fn(() => Promise.resolve({ status: 204, statusText: "No Content" })),
+   put: jest.fn(() => {
+      return Promise.resolve({ status: 204, statusText: "No Content" });
+   }),
    delete: jest.fn(() => {
-
-      // If shouldDelete is true, return success
-      if(shouldDelete){
-         fixtures.appointments["2"].interview = null
-         return Promise.resolve({ status: 200, statusText: "Deleted" });
-      }
-
-      // Return error if not
-      return Promise.resolve({ status: 500, statusText: "Error deleting" });
-      
+      // If isError is false, return success
+      fixtures.appointments["2"].interview = null;
+      return Promise.resolve({ status: 200, statusText: "Deleted" });
    }),
    get: jest.fn((url) => {
       switch (url) {
