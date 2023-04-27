@@ -14,7 +14,7 @@ function Form(props) {
    // Sets states back to default
    const reset = () => {
       setStudent("");
-      setError("")
+      setError("");
       setInterviewer(null);
    };
 
@@ -23,7 +23,6 @@ function Form(props) {
 
    // Cancels, then resets form back to default
    const handleCancel = () => {
-      
       props.onCancel();
       reset();
    };
@@ -72,7 +71,7 @@ function Form(props) {
                <Button onClick={handleCancel} data-testid="cancel" danger={"true"}>
                   Cancel
                </Button>
-               <Button onClick={handleSave} data-testid="save"  confirm={"true"}>
+               <Button onClick={handleSave} data-testid="save" confirm={"true"}>
                   Save
                </Button>
             </section>

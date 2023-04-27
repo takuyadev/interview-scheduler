@@ -1,4 +1,9 @@
-import { getAppointmentsForDay, getInterviewersForDay, getInterview, updateSpots } from "utils/selectors";
+import {
+   getAppointmentsForDay,
+   getInterviewersForDay,
+   getInterview,
+   updateSpots,
+} from "utils/selectors";
 import { TEST_DATA } from "../data/constants.js";
 
 describe("getAppointmentsForDay", () => {
@@ -78,20 +83,19 @@ describe("getInterview()", () => {
    });
 });
 
-
 describe("updateSpots()", () => {
-   test("updateSpots should return 0 if there invalid properties are passed", () =>{
-      const result = updateSpots(null)
-      expect(result).toBe(0)
-   })
+   test("updateSpots should return 0 if there invalid properties are passed", () => {
+      const result = updateSpots(null);
+      expect(result).toBe(0);
+   });
 
-   test("updateSpots should return 0 when there are no spots left ({})", () =>{
-      const result = updateSpots({})
-      expect(result).toBe(0)
-   })
+   test("updateSpots should return 0 when there are no spots left ({})", () => {
+      const result = updateSpots({});
+      expect(result).toBe(0);
+   });
 
-   test("updateSpots should return 2 when there are only 2 spots left", () =>{
-      const result = updateSpots(TEST_DATA.appointments)
-      expect(result).toBe(3)
-   })
-})
+   test("updateSpots should return 2 when there are only 2 spots left", () => {
+      const result = updateSpots(TEST_DATA.appointments);
+      expect(result).toBe(3);
+   });
+});

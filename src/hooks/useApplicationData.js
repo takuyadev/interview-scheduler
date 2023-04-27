@@ -49,7 +49,6 @@ export const useApplicationData = (initialValue) => {
       // After deletion, should update all data to prevent stale state
       deleteAppointment(id).then(() => {
          dispatch({ type: TYPE.UPDATE_SPOTS });
-
       });
 
    // Listen for changes on websocket
@@ -69,7 +68,7 @@ export const useApplicationData = (initialValue) => {
 
       // Cleanup socket on unmount
       return () => {
-         socket.close()
+         socket.close();
       };
    }, []);
 

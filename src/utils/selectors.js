@@ -61,6 +61,5 @@ export const updateSpots = (appointments) => {
       return !curr.interview ? ++acc : acc;
    }, 0);
 
-
    return result;
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 // Custom hook to handle changes in UI
 export const useVisualMode = (initial) => {
@@ -25,10 +25,6 @@ export const useVisualMode = (initial) => {
          return [...prev];
       });
    };
-
-   useEffect(()=>{
-      console.log(history)
-   },[history])
 
    return { history, mode, back, transition };
 };

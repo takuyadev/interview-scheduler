@@ -4,7 +4,6 @@ import React from "react";
 // @props onEdit, onDelete, name, interviewer
 
 const Show = (props) => {
-
    // Handles event handlers for when edit or delete is pressed
    const handleEdit = () => props.onEdit();
    const handleDelete = () => props.onDelete();

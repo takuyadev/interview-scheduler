@@ -6,8 +6,7 @@ import "./Button.scss";
 // @props confirm, danger
 
 export default function Button(props) {
-
-  // Render button based on provided props
+   // Render button based on provided props
    const buttonClass = classNames("button", {
       "button--confirm": props.confirm,
       "button--danger": props.danger,

@@ -31,8 +31,6 @@ import Application from "pages/Application/Application";
 */
 
 describe("Application", () => {
-
-
    it("defaults to Monday and chnages the schedule when a new day is selected", async () => {
       // 1. Render container for application
       const { getByText } = render(<Application />);
@@ -140,7 +138,7 @@ describe("Application", () => {
       fireEvent.click(getByText(container, "Save"));
 
       // 7. See if "Delete" status is shown
-      expect(getByText(container, "Saving")).toBeInTheDocument();;
+      expect(getByText(container, "Saving")).toBeInTheDocument();
 
       // 8. Wait for "Delete" status to be hidden
       await waitForElementToBeRemoved(() => getByText(container, "Saving"));
@@ -183,7 +181,6 @@ describe("Application", () => {
    });
 
    it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
-
       // 1. Render the Application.
       const { container } = render(<Application />);
 

@@ -110,7 +110,10 @@ const Appointment = (props) => {
             <Error onClose={back} message="Error editing your appointment" />
          )}
          {mode === MODE.ERROR_DELETE && (
-            <Error onClose={back} message="Error deleting your appointment" />
+            <Error
+               onClose={() => transition(MODE.SHOW, true)}
+               message="Error deleting your appointment"
+            />
          )}
       </article>
    );
