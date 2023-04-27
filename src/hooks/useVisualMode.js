@@ -10,19 +10,30 @@ export const useVisualMode = (initial) => {
    const transition = useCallback((value, replace = false) => {
       setMode(value);
       setHistory((prev) => {
+         // Copy array to prevent mutation
+         let output = [...prev];
+
+         // If replace is true, then remove last from array
+         // Allows new value to replace previous mode
          if (replace) {
-            prev.pop();
+            output.pop();
          }
-         return [...prev, value];
+         return [...output, value];
       });
    }, []);
 
    // Go back one time in history array
    const back = () => {
       setHistory((prev) => {
-         prev.pop();
-         setMode(prev[prev.length - 1]);
-         return [...prev];
+         // Copy array to prevent mutation
+         let output = [...prev];
+
+         // Remove last in history
+         output.pop();
+
+         // Set current mode to last index of new array
+         setMode(output[output.length - 1]);
+         return [...output];
       });
    };
 
