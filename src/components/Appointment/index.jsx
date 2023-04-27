@@ -21,7 +21,7 @@ const Appointment = (props) => {
    // Sets form state to saving immediately, and attempts to save
    const handleSave = (student, interviewer) => {
       if (!student || !interviewer) {
-         return transition(MODE.ERROR_SAVE);
+         return transition(MODE.ERROR_SAVE, true);
       }
 
       transition(MODE.SAVING);
@@ -33,7 +33,7 @@ const Appointment = (props) => {
             transition(MODE.SHOW);
          })
          .catch(() => {
-            transition(MODE.ERROR_EDIT);
+            transition(MODE.ERROR_EDIT, true);
          });
    };
 
@@ -45,7 +45,7 @@ const Appointment = (props) => {
       props
          .onDelete(props.id)
          .then(() => transition(MODE.EMPTY))
-         .catch(() => transition(MODE.ERROR_DELETE));
+         .catch(() => transition(MODE.ERROR_DELETE, true));
    };
 
    // Sets form state to saving immediately, and attempts to save
@@ -56,9 +56,8 @@ const Appointment = (props) => {
 
    // Listens to websocket, and updates on change
    useEffect(() => {
-
       // Check for interview status, and change mode accordingly
-      !props.interview ? transition(MODE.EMPTY) : transition(MODE.SHOW) 
+      !props.interview ? transition(MODE.EMPTY) : transition(MODE.SHOW);
    }, [transition, props.interview]);
 
    return (
@@ -70,7 +69,7 @@ const Appointment = (props) => {
 
          {/* Render for new appointment being created */}
          {mode === MODE.CREATE && (
-            <Form onSave={handleSave} onCancel={() => back()} interviewers={props.interviewers} />
+            <Form onSave={handleSave} onCancel={back} interviewers={props.interviewers} />
          )}
 
          {/* Show current filled in appointment */}
@@ -89,7 +88,7 @@ const Appointment = (props) => {
                student={props.interview.student}
                interviewer={props.interview.interviewer.id}
                onSave={handleSave}
-               onCancel={() => back()}
+               onCancel={back}
                interviewers={props.interviewers}
             />
          )}

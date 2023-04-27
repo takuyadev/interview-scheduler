@@ -78,6 +78,5 @@ export const useApplicationData = (initialValue) => {
       updateData();
    }, []);
 
-
    return { state, setDay, bookInterview, cancelInterview };
 };

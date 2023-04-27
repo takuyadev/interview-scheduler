@@ -20,7 +20,6 @@
       "build-storybook": "build-storybook -s public",
       "cypress": "cypress open -P ."
    },
-
    "browserslist": {
       "production": [
          ">0.2%",
